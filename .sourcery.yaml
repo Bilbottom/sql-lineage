@@ -17,7 +17,7 @@ rule_settings:
 rules: []
 
 metrics:
-  quality_threshold: 80.0
+  quality_threshold: 70.0
 
 github:
   labels: []

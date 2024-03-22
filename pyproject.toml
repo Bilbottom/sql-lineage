@@ -35,7 +35,7 @@ black = "*"
 
 
 [tool.pytest.ini_options]
-addopts = "--cov=src --cov-fail-under=80"
+addopts = "--cov=sql_lineage --cov-fail-under=80"
 testpaths = ["tests"]
 
 
