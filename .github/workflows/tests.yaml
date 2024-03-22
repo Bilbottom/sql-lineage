@@ -1,0 +1,29 @@
+---
+name: Tests
+run-name: Tests 🧪
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: windows-latest
+    steps:
+      - name: 🛎️ Check out repository
+        uses: actions/checkout@v3
+
+      - name: 📦 Set up Poetry
+        run: pipx install poetry==1.7.0
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+          cache: poetry
+
+      - name: 🔨 Install dependencies
+        run: poetry install --with test
+
+      - name: ✅ Run unit tests
+        run: poetry run pytest

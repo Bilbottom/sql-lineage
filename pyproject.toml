@@ -1,0 +1,49 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+name = "python-template"
+version = "0.0.0"
+description = ""
+authors = ["Bilbottom"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group]
+dev.optional = true
+test.optional = true
+ide.optional = true
+
+[tool.poetry.group.dev.dependencies]
+coverage-badge = "^1.1.0"
+pre-commit = "^3.6.2"
+pylint = "3.1.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.0.2"
+pytest-cov = "^4.1.0"
+
+# Packages just for IDE integration
+[tool.poetry.group.ide.dependencies]
+black = "*"
+
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-fail-under=80"
+testpaths = ["tests"]
+
+
+[tool.isort]
+profile = "black"
+
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.MASTER]
+ignore-paths = "^tests/.*$"
