@@ -1,8 +1,8 @@
 """
-Unit tests for the ``src.main`` module.
+Unit tests for the ``sql_lineage.main`` module.
 """
 
-import src.main as main
+import sql_lineage.main as main
 
 
 def test__main(monkeypatch):

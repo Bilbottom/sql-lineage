@@ -4,15 +4,16 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry]
-name = "python-template"
+name = "sql-lineage"
 version = "0.0.0"
-description = ""
+description = "Personal SQL lineage generator."
 authors = ["Bilbottom"]
 readme = "README.md"
-packages = [{include = "src"}]
+packages = [{include = "sql_lineage"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+sqlglot = {extras = ["rs"], version = "^23.0.5"}
 
 [tool.poetry.group]
 dev.optional = true
