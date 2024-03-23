@@ -17,7 +17,7 @@ def test__main(tmp_path: pathlib.Path, sql_with_ctes: str, mermaid_with_ctes: st
     sql_path = tmp_path / "test.sql"
     sql_path.write_text(sql_with_ctes, encoding="utf-8")
 
-    main.main(file_path=str(sql_path))
+    main.main(file=str(sql_path))
 
     assert mermaid_path.exists()
     assert mermaid_path.read_text(encoding="utf-8") == mermaid_with_ctes
@@ -29,7 +29,7 @@ def test__main__file_not_found():
     is not found.
     """
     with pytest.raises(FileNotFoundError):
-        main.main(file_path="nonexistent.sql")
+        main.main(file="nonexistent.sql")
 
 
 def test__main__value_error():
@@ -38,4 +38,4 @@ def test__main__value_error():
     a file.
     """
     with pytest.raises(ValueError):
-        main.main(file_path="tests")
+        main.main(file="tests")
