@@ -39,9 +39,11 @@ This project is just a personal tool to help me generate lineage diagrams (in [M
 
 Upcoming improvements will (hopefully) include:
 
-- Column lineage to Mermaid
 - Semantic edges (e.g. distinguish between `JOIN`, `WHERE`, `UNION`, etc.)
+- Support for parameterised queries (e.g. with variables like `$execution_date`)
+- Parsing only the `SELECT` part of a SQL file that includes DDL/DML commands
 - Lineage for multiple files in a single diagram
+- Column lineage to Mermaid
 
 ## Installation ⬇️
 
@@ -52,6 +54,10 @@ pip install bills-sql-lineage
 ```
 
 ## Usage 📖
+
+> [!WARNING]
+>
+> This is likely to change significantly as the project evolves.
 
 Pass the path to a SQL file to the `lineage` command to generate the lineage as a [Mermaid](https://mermaid.js.org/) diagram:
 
@@ -64,3 +70,38 @@ This will write a Mermaid diagram to `path/to/file.mermaid`. You can control the
 ```
 lineage path/to/file.sql path/to/output.mermaid
 ```
+
+## Example 📝
+
+Given the following SQL query:
+
+```sql
+with
+
+aaa as (select 1 as aa),
+bbb as (select 2 as bb),
+ccc as (select 3 as cc, aa from aaa),
+ddd as (select 4 as dd, aa from aaa where aa not in (select bb from bbb))
+
+select *
+from ccc
+    inner join ddd using (aa)
+```
+
+...the following Mermaid diagram will be generated:
+
+```mermaid
+graph TD
+    aaa
+    bbb
+    ccc
+    ddd
+    final
+    aaa --> ccc
+    aaa --> ddd
+    bbb --> ddd
+    ccc --> final
+    ddd --> final
+```
+
+Note that the `final` node is an alias for the final `SELECT` statement since the final `SELECT` statement is not a CTE.
