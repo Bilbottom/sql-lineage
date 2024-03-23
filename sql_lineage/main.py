@@ -26,17 +26,16 @@ def _to_path(file_path: str, validate: bool = False) -> pathlib.Path:
 
 
 @arguably.command
-def main(file_path: str, target_path: str = None) -> None:
+def main(file: str, target: str = None) -> None:
     """
     Parse an SQL file into a Mermaid graph by tracing CTEs.
     """
-    file_path = _to_path(file_path, validate=True)
-    target_path = (
-        _to_path(target_path) if target_path else file_path.with_suffix(".mermaid")
-    )
+    file_path = _to_path(file, validate=True)
+    target_path = _to_path(target) if target else file_path.with_suffix(".mermaid")
 
     sql = file_path.read_text(encoding="utf-8")
     mermaid = lineage.sql_to_mermaid(sql)
 
     target_path.write_text(mermaid, encoding="utf-8")
-    print(f"Mermaid graph written to: {target_path}")  # Switch to logging at some point
+    # Switch to logging at some point
+    print(f"Mermaid graph written to: {target_path.absolute()}")
