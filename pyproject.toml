@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry]
-name = "sql-lineage"
+name = "bills-sql-lineage"  # For PyPI
 version = "0.0.1"
 description = "Personal SQL lineage generator."
 authors = ["Bilbottom"]
