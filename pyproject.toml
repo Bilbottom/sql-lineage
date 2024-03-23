@@ -11,9 +11,13 @@ authors = ["Bilbottom"]
 readme = "README.md"
 packages = [{include = "sql_lineage"}]
 
+[tool.poetry.scripts]
+lineage = 'sql_lineage.__main__:app'
+
 [tool.poetry.dependencies]
 python = "^3.11"
 sqlglot = {extras = ["rs"], version = "^23.0.5"}
+arguably = "^1.2.5"
 
 [tool.poetry.group]
 dev.optional = true
@@ -37,6 +41,10 @@ black = "*"
 [tool.pytest.ini_options]
 addopts = "--cov=sql_lineage --cov-fail-under=80"
 testpaths = ["tests"]
+
+
+[tool.coverage.run]
+omit = ["__main__.py"]
 
 
 [tool.isort]

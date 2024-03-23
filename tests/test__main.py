@@ -1,75 +1,41 @@
 """
-Unit tests for the ``sql_lineage.main`` module.
+Unit tests for the ``sql_lineage.lineage`` module.
 """
 
-import textwrap
+import pathlib
 
 import pytest
 
 import sql_lineage.main as main
 
 
-@pytest.fixture
-def nodes() -> main.Nodes:
-    return ["aaa", "bbb", "ccc", "ddd", "final"]
-
-
-@pytest.fixture
-def edges() -> main.Edges:
-    return [
-        ("aaa", "ccc"),
-        ("aaa", "ddd"),
-        ("bbb", "ddd"),
-        ("ccc", "final"),
-        ("ddd", "final"),
-    ]
-
-
-@pytest.fixture
-def sql_with_ctes() -> str:
-    return textwrap.dedent(
-        """
-        with
-            aaa as (select 1 as aa),
-            bbb as (select 2 as bb),
-            ccc as (select 3 as cc, aa from aaa),
-            ddd as (select 4 as dd, aa from aaa where aa not in (select bb from bbb))
-
-        select *
-        from ccc
-            inner join ddd using (aa)
-        """
-    )
-
-
-@pytest.fixture
-def mermaid_with_ctes() -> str:
-    return textwrap.dedent(
-        """\
-        graph TD
-            aaa
-            bbb
-            ccc
-            ddd
-            final
-            aaa --> ccc
-            aaa --> ddd
-            bbb --> ddd
-            ccc --> final
-            ddd --> final
-        """
-    )
-
-
-def test__parse_ctes(nodes: main.Nodes, edges: main.Edges, sql_with_ctes: str):
+def test__main(tmp_path: pathlib.Path, sql_with_ctes: str, mermaid_with_ctes: str):
     """
-    Test the ``parse_ctes`` function.
+    Test that the CLI opens and writes files correctly.
     """
-    assert main.parse_ctes(sql_with_ctes) == (nodes, edges)
+    mermaid_path = tmp_path / "test.mermaid"
+    sql_path = tmp_path / "test.sql"
+    sql_path.write_text(sql_with_ctes, encoding="utf-8")
+
+    main.main(file_path=str(sql_path))
+
+    assert mermaid_path.exists()
+    assert mermaid_path.read_text(encoding="utf-8") == mermaid_with_ctes
 
 
-def test__to_mermaid(nodes: main.Nodes, edges: main.Edges, mermaid_with_ctes: str):
+def test__main__file_not_found():
     """
-    Test the ``to_mermaid`` function.
+    Test that the CLI raises a ``FileNotFoundError`` when the input file
+    is not found.
     """
-    assert main.to_mermaid(nodes, edges) == mermaid_with_ctes
+    with pytest.raises(FileNotFoundError):
+        main.main(file_path="nonexistent.sql")
+
+
+def test__main__value_error():
+    """
+    Test that the CLI raises a ``ValueError`` when the input file is not
+    a file.
+    """
+    with pytest.raises(ValueError):
+        main.main(file_path="tests")
