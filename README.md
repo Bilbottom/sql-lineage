@@ -1,6 +1,6 @@
 <div align="center">
 
-[![Python 3.7+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/release/python-3110/)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 [![tests](https://github.com/Bilbottom/sql-lineage/actions/workflows/tests.yaml/badge.svg)](https://github.com/Bilbottom/sql-lineage/actions/workflows/tests.yaml)
 [![coverage](coverage.svg)](https://github.com/dbrgn/coverage-badge)
@@ -16,8 +16,51 @@
 
 ---
 
-# SQL Lineage
+# SQL Lineage 🔀
 
 Personal SQL lineage generator.
 
-Built on the awesome [SQLGlot](https://github.com/tobymao/sqlglot) library.
+Built on the following awesome libraries:
+
+- [SQLGlot](https://github.com/tobymao/sqlglot) for SQL parsing
+- [arguably](https://github.com/treykeown/arguably) for the CLI
+
+## So... what is this? 🤔
+
+> [!NOTE]
+>
+> This project is still in development and currently only parses the CTEs of an SQL query since that's all I need for now.
+
+I write _a lot_ of SQL, and I often need to understand "lineage" in lots of different ways.
+
+Things like [dbt](https://www.getdbt.com/) and [SQLMesh](https://sqlmesh.com/) are great for object lineage (tables, columns, etc.), but I often need to understand "lineage" like the CTE lineage in a query, among other things.
+
+This project is just a personal tool to help me generate lineage diagrams (in [Mermaid](https://mermaid.js.org/) syntax) for SQL queries to fit that requirement.
+
+Upcoming improvements will (hopefully) include:
+
+- Column lineage to Mermaid
+- Semantic edges (e.g. distinguish between `JOIN`, `WHERE`, `UNION`, etc.)
+- Lineage for multiple files in a single diagram
+
+## Installation ⬇️
+
+Grab a copy from PyPI like usual (note the `bills-` prefix):
+
+```
+pip install bills-sql-lineage
+```
+
+## Usage 📖
+
+Pass the path to a SQL file to the `lineage` command to generate the lineage as a [Mermaid](https://mermaid.js.org/) diagram:
+
+```
+lineage path/to/file.sql
+```
+
+This will write a Mermaid diagram to `path/to/file.mermaid`. You can control the target with the second argument:
+
+```
+lineage path/to/file.sql path/to/output.mermaid
+```
