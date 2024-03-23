@@ -2,53 +2,41 @@
 An SQL lineage tool, built on the awesome SQLGlot library.
 """
 
-import sqlglot
-from sqlglot import exp
-from sqlglot.optimizer import qualify
+from __future__ import annotations
 
-Nodes = list[str]
-Edges = list[tuple[str, str]]  # Directed edges, source --> target.
+import pathlib
+
+from sql_lineage import lineage
 
 
-def parse_ctes(sql: str) -> [Nodes, Edges]:
+def _to_path(file_path: str, validate: bool = False) -> pathlib.Path:
     """
-    Parse an SQL query into nodes and edges based on CTEs.
+    Convert a file path to a pathlib.Path object.
     """
-    parsed = qualify.qualify(sqlglot.parse_one(sql))
-    nodes, edges = [], []
+    path = pathlib.Path(file_path)
+    if validate:
+        if not path.exists():
+            raise FileNotFoundError(f"File not found: {file_path}")
+        if not path.is_file():
+            raise ValueError(f"Not a file: {file_path}")
 
-    # Lazy and error-prone CTE sourcing
-    for cte in parsed.find_all(exp.CTE):
-        nodes.append(cte.alias)
-        edges.extend((tbl.name, cte.alias) for tbl in cte.find_all(exp.Table))
-
-    parsed.args["with"] = None  # Dirty hack to remove the CTEs from the query
-    nodes.append("final")
-    edges.extend((tbl.name, "final") for tbl in parsed.find_all(exp.Table))
-
-    return nodes, edges
+    return path
 
 
-def to_mermaid(nodes: Nodes, edges: Edges) -> str:
+def main(file_path: str, target_path: str = None) -> None:
     """
-    Convert nodes and edges into a Mermaid graph.
+    Parse an SQL file into a Mermaid graph by tracing CTEs.
     """
-    mermaid = "graph TD\n"
+    file_path = _to_path(file_path, validate=True)
+    target_path = (
+        _to_path(target_path) if target_path else file_path.with_suffix(".mermaid")
+    )
 
-    for node in nodes:
-        mermaid += f"    {node}\n"  # pylint: disable=consider-using-join
+    sql = file_path.read_text(encoding="utf-8")
+    mermaid = lineage.sql_to_mermaid(sql)
 
-    for edge in edges:
-        mermaid += f"    {edge[0]} --> {edge[1]}\n"
-
-    return mermaid
-
-
-def main() -> None:
-    """
-    Entry point into the SQL lineage tool.
-    """
+    target_path.write_text(mermaid, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()  # pragma: no cover
+    pass
