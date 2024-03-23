@@ -6,6 +6,8 @@ from __future__ import annotations
 
 import pathlib
 
+import arguably
+
 from sql_lineage import lineage
 
 
@@ -23,6 +25,7 @@ def _to_path(file_path: str, validate: bool = False) -> pathlib.Path:
     return path
 
 
+@arguably.command
 def main(file_path: str, target_path: str = None) -> None:
     """
     Parse an SQL file into a Mermaid graph by tracing CTEs.
@@ -36,7 +39,4 @@ def main(file_path: str, target_path: str = None) -> None:
     mermaid = lineage.sql_to_mermaid(sql)
 
     target_path.write_text(mermaid, encoding="utf-8")
-
-
-if __name__ == "__main__":
-    pass
+    print(f"Mermaid graph written to: {target_path}")  # Switch to logging at some point
