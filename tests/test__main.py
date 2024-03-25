@@ -6,10 +6,15 @@ import pathlib
 
 import pytest
 
-import sql_lineage.main as main
+from sql_lineage import main
 
 
-def test__main(tmp_path: pathlib.Path, sql_with_ctes: str, mermaid_with_ctes: str):
+def test__main(
+    mock_datetime,
+    tmp_path: pathlib.Path,
+    sql_with_ctes: str,
+    mermaid_with_ctes: str,
+):
     """
     Test that the CLI opens and writes files correctly.
     """

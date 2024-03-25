@@ -2,12 +2,24 @@
 Shared fixtures for tests.
 """
 
+import datetime
 import textwrap
 
 import pytest
 
 
 @pytest.fixture
+def mock_datetime(monkeypatch):
+
+    class MockDatetime(datetime.datetime):
+        @classmethod
+        def now(cls, **kwargs):
+            return datetime.datetime(2024, 1, 1)
+
+    monkeypatch.setattr(datetime, "datetime", MockDatetime)
+
+
+@pytest.fixture(scope="session")
 def sql_with_ctes() -> str:
     return textwrap.dedent(
         """
@@ -24,11 +36,12 @@ def sql_with_ctes() -> str:
     )
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def mermaid_with_ctes() -> str:
     return textwrap.dedent(
         """\
-        graph TD
+        %% Generated at 2024-01-01 00:00:00
+        flowchart TD
             aaa
             bbb
             ccc
