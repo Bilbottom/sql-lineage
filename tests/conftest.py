@@ -17,7 +17,7 @@ def sql_with_ctes() -> str:
         ccc as (select 3 as cc, aa from aaa),
         ddd as (select 4 as dd, aa from aaa where aa not in (select bb from bbb))
 
-        select *
+        select *, $something
         from ccc
             inner join ddd using (aa)
         """

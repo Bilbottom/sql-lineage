@@ -4,6 +4,8 @@ Parsers for SQL queries and Mermaid graphs.
 
 from __future__ import annotations
 
+import contextlib
+
 import sqlglot
 from sqlglot import exp
 from sqlglot.optimizer import qualify
@@ -16,8 +18,12 @@ def _parse_ctes(sql: str) -> [Nodes, Edges]:
     """
     Parse an SQL query into nodes and edges based on CTEs.
     """
-    parsed = qualify.qualify(sqlglot.parse_one(sql))
     nodes, edges = [], []
+    parsed = sqlglot.parse_one(sql)
+    with contextlib.suppress(Exception):
+        # There isn't a hard requirement for the query to be valid SQL,
+        # but it's better if it is
+        parsed = qualify.qualify(parsed)
 
     # Lazy and error-prone CTE sourcing
     for cte in parsed.find_all(exp.CTE):
