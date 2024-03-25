@@ -40,7 +40,7 @@ This project is just a personal tool to help me generate lineage diagrams (in [M
 Upcoming improvements will (hopefully) include:
 
 - Semantic edges (e.g. distinguish between `JOIN`, `WHERE`, `UNION`, etc.)
-- Support for parameterised queries (e.g. with variables like `$execution_date`)
+- Support for parameterised queries (e.g. with Jinja blocks, like [dbt](https://www.getdbt.com/))
 - Parsing only the `SELECT` part of a SQL file that includes DDL/DML commands
 - Lineage for multiple files in a single diagram
 - Column lineage to Mermaid
