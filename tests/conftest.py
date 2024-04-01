@@ -3,7 +3,7 @@ Shared fixtures for tests.
 """
 
 import datetime
-import textwrap
+import pathlib
 
 import pytest
 
@@ -21,36 +21,9 @@ def mock_datetime(monkeypatch):
 
 @pytest.fixture(scope="session")
 def sql_with_ctes() -> str:
-    return textwrap.dedent(
-        """
-        with
-        aaa as (select 1 as aa),
-        bbb as (select 2 as bb),
-        ccc as (select 3 as cc, aa from aaa),
-        ddd as (select 4 as dd, aa from aaa where aa not in (select bb from bbb))
-
-        select *, $something
-        from ccc
-            inner join ddd using (aa)
-        """
-    )
+    return pathlib.Path("tests/fixtures/mock.sql").read_text(encoding="utf-8")
 
 
 @pytest.fixture(scope="session")
 def mermaid_with_ctes() -> str:
-    return textwrap.dedent(
-        """\
-        %% Generated at 2024-01-01 00:00:00
-        flowchart TD
-            aaa
-            bbb
-            ccc
-            ddd
-            final
-            aaa --> ccc
-            aaa --> ddd
-            bbb --> ddd
-            ccc --> final
-            ddd --> final
-        """
-    )
+    return pathlib.Path("tests/fixtures/mock.mermaid").read_text(encoding="utf-8")
