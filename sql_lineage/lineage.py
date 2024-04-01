@@ -15,12 +15,12 @@ Nodes = list[str]
 Edges = list[tuple[str, str]]  # Directed edges, source --> target.
 
 
-def _parse_ctes(sql: str) -> [Nodes, Edges]:
+def _parse_ctes(sql: str, dialect: str = None) -> [Nodes, Edges]:
     """
     Parse an SQL query into nodes and edges based on CTEs.
     """
     nodes, edges = [], []
-    parsed = sqlglot.parse_one(sql)
+    parsed = sqlglot.parse_one(sql, dialect=dialect)
     with contextlib.suppress(Exception):
         # There isn't a hard requirement for the query to be valid SQL,
         # but it's better if it is
@@ -55,10 +55,10 @@ def _to_mermaid(nodes: Nodes, edges: Edges) -> str:
     return mermaid
 
 
-def sql_to_mermaid(sql: str) -> str:
+def sql_to_mermaid(sql: str, dialect: str = None) -> str:
     """
     Convert an SQL query into a Mermaid graph.
     """
-    nodes, edges = _parse_ctes(sql)
+    nodes, edges = _parse_ctes(sql, dialect)
 
     return _to_mermaid(nodes, edges)

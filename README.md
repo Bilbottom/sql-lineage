@@ -65,10 +65,16 @@ Pass the path to a SQL file to the `lineage` command to generate the lineage as 
 lineage path/to/file.sql
 ```
 
-This will write a Mermaid diagram to `path/to/file.mermaid`. You can control the target with the second argument:
+This will write a Mermaid diagram to `path/to/file.mermaid`. You can control the target path with the `--target` argument:
 
 ```
-lineage path/to/file.sql path/to/output.mermaid
+lineage path/to/file.sql --target path/to/output.mermaid
+```
+
+By default, the SQL dialect will be inferred by SQLGlot, but you can specify a dialect with the `--dialect` argument:
+
+```
+lineage path/to/file.sql --dialect snowflake
 ```
 
 ## Example 📝
