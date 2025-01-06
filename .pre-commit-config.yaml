@@ -32,7 +32,7 @@ repos:
         name: Validate Python
 
   - repo: https://github.com/python-poetry/poetry
-    rev: 1.8.0
+    rev: 2.0.0
     hooks:
       - id: poetry-check
         name: Check that the Poetry configuration is valid
@@ -47,7 +47,7 @@ repos:
         name: Make code pretty
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.17.0
+    rev: v3.19.1
     hooks:
       - id: pyupgrade
         args: ["--py311-plus"]
@@ -67,7 +67,7 @@ repos:
         args: ["--filter-files"]
 
   - repo: https://github.com/hadialqattan/pycln
-    rev: v2.4.0
+    rev: v2.5.0
     hooks:
       - id: pycln
         name: Remove unused imports and variables
@@ -75,7 +75,7 @@ repos:
 
   # Sourcery
   - repo: https://github.com/sourcery-ai/sourcery
-    rev: v1.23.0
+    rev: v1.28.0
     hooks:
       - id: sourcery
         name: Check for refactoring opportunities
