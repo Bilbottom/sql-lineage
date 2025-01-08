@@ -1,7 +1,7 @@
 ---
 ci:
   autoupdate_schedule: quarterly
-  skip: [poetry-lock, sourcery, pylint, pytest, coverage-badge]
+  skip: ["poetry-lock", "pytest", "coverage-badge"]
 
 repos:
   - repo: meta
@@ -46,52 +46,14 @@ repos:
       - id: prettier
         name: Make code pretty
 
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.19.1
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.6
     hooks:
-      - id: pyupgrade
-        args: ["--py311-plus"]
-        name: Align Python code to latest syntax
-
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
-    hooks:
-      - id: black
-        name: Check Python formatting
-
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        name: Sort Python import statements
-        args: ["--filter-files"]
-
-  - repo: https://github.com/hadialqattan/pycln
-    rev: v2.5.0
-    hooks:
-      - id: pycln
-        name: Remove unused imports and variables
-        args: ["--config=pyproject.toml"]
-
-  # Sourcery
-  - repo: https://github.com/sourcery-ai/sourcery
-    rev: v1.28.0
-    hooks:
-      - id: sourcery
-        name: Check for refactoring opportunities
-        args: ["--diff=git diff HEAD", "--no-summary"]
-        files: drawings
-        exclude: \.*/__init__\.py
-
-  # Final linting
-  - repo: local
-    hooks:
-      - id: pylint
-        name: Lint Python code with pylint
-        entry: pylint
-        language: system
-        types: ["python"]
-        args: ["-rn", "--rcfile=pyproject.toml"]
+      - id: ruff
+        name: Lint Python code
+        args: ["--fix"]
+      - id: ruff-format
+        name: Format Python code
 
   # Testing and coverage
   - repo: local

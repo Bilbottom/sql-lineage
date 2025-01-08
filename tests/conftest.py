@@ -10,7 +10,6 @@ import pytest
 
 @pytest.fixture
 def mock_datetime(monkeypatch):
-
     class MockDatetime(datetime.datetime):
         @classmethod
         def now(cls, **kwargs):

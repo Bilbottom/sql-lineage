@@ -1,28 +1,30 @@
+[project]
+name = "bills-sql-lineage"  # For PyPI
+version = "0.0.3"
+description = "Personal SQL lineage generator."
+authors = [{name = "Bilbottom"}]
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+dynamic = ["dependencies"]
+
+[project.scripts]
+lineage = 'sql_lineage.__main__:app'
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry]
-name = "bills-sql-lineage"  # For PyPI
-version = "0.0.3"
-description = "Personal SQL lineage generator."
-authors = ["Bilbottom"]
-readme = "README.md"
 packages = [{include = "sql_lineage"}]
 
-[tool.poetry.scripts]
-lineage = 'sql_lineage.__main__:app'
-
 [tool.poetry.dependencies]
-python = "^3.11"
-sqlglot = {extras = ["rs"], version = "^23.0.5"}
+sqlglot = {extras = ["rs"], version = "^26.0.1"}
 arguably = "^1.2.5"
 
 [tool.poetry.group]
 dev.optional = true
 test.optional = true
-ide.optional = true
 
 [tool.poetry.group.dev.dependencies]
 coverage-badge = "^1.1.0"
@@ -32,10 +34,6 @@ pylint = "3.1.0"
 [tool.poetry.group.test.dependencies]
 pytest = "^8.0.2"
 pytest-cov = "^4.1.0"
-
-# Packages just for IDE integration
-[tool.poetry.group.ide.dependencies]
-black = "*"
 
 
 [tool.pytest.ini_options]
