@@ -7,6 +7,12 @@ import pathlib
 
 import pytest
 
+FIXTURES = pathlib.Path(__file__).parent / "fixtures"
+
+
+def read_fixture(fixture_name: str) -> str:
+    return pathlib.Path(FIXTURES / fixture_name).read_text(encoding="utf-8")
+
 
 @pytest.fixture
 def mock_datetime(monkeypatch):
@@ -20,9 +26,9 @@ def mock_datetime(monkeypatch):
 
 @pytest.fixture(scope="session")
 def sql_with_ctes() -> str:
-    return pathlib.Path("tests/fixtures/mock.sql").read_text(encoding="utf-8")
+    return read_fixture("mock.sql")
 
 
 @pytest.fixture(scope="session")
 def mermaid_with_ctes() -> str:
-    return pathlib.Path("tests/fixtures/mock.mermaid").read_text(encoding="utf-8")
+    return read_fixture("mock.mermaid")
