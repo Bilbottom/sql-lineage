@@ -42,5 +42,6 @@ def test__main__value_error():
     Test that the CLI raises a ``ValueError`` when the input file is not
     a file.
     """
+    tests_dir = pathlib.Path(__file__).parent
     with pytest.raises(ValueError):
-        main.main(file="tests")
+        main.main(str(tests_dir))
