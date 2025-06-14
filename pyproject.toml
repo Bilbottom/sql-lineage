@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "bills-sql-lineage"  # For PyPI
 version = "0.0.4"
 description = "Personal SQL lineage generator."
-authors = [{name = "Bilbottom"}]
+authors = [{name = "billwallis"}]
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
