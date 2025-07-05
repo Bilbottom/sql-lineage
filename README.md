@@ -2,13 +2,13 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
-[![tests](https://github.com/billwallis/sql-lineage/actions/workflows/tests.yaml/badge.svg)](https://github.com/billwallis/sql-lineage/actions/workflows/tests.yaml)
+[![tests](https://github.com/billwallis/bills-sql-lineage/actions/workflows/tests.yaml/badge.svg)](https://github.com/billwallis/sql-lineage/actions/workflows/tests.yaml)
 [![coverage](coverage.svg)](https://github.com/dbrgn/coverage-badge)
-[![GitHub last commit](https://img.shields.io/github/last-commit/billwallis/sql-lineage)](https://shields.io/badges/git-hub-last-commit)
+[![GitHub last commit](https://img.shields.io/github/last-commit/billwallis/bills-sql-lineage)](https://shields.io/badges/git-hub-last-commit)
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/billwallis/sql-lineage/main.svg)](https://results.pre-commit.ci/latest/github/billwallis/sql-lineage/main)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/billwallis/bills-sql-lineage/main.svg)](https://results.pre-commit.ci/latest/github/billwallis/sql-lineage/main)
 
 </div>
 
@@ -45,7 +45,7 @@ Upcoming improvements will (hopefully) include:
 
 ## Installation ⬇️
 
-Grab a copy from PyPI like usual (note the `bills-` prefix):
+Grab a copy from PyPI like usual:
 
 ```
 pip install bills-sql-lineage

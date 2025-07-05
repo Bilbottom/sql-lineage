@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bills-sql-lineage"  # For PyPI
+name = "bills-sql-lineage"
 version = "0.0.5"
 description = "Personal SQL lineage generator."
 authors = [{name = "billwallis"}]
