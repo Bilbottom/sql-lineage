@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bills-sql-lineage"  # For PyPI
+name = "bills-sql-lineage"
 version = "0.0.5"
 description = "Personal SQL lineage generator."
 authors = [{name = "billwallis"}]
@@ -23,13 +23,18 @@ dev = [
     "pre-commit>=4.1.0",
 ]
 test = [
-    "pytest>=8.3.5",
-    "pytest-cov>=6.0.0",
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
 ]
 
 
 [tool.setuptools]
 packages = ["sql_lineage"]
+
+
+[tool.uv]
+required-version = ">=0.7,<1.0"
+default-groups = "all"
 
 
 [[tool.uv.index]]
